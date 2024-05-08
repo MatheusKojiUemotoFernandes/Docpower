@@ -6,7 +6,7 @@
 }
 
 body{
-    background: rgb(65, 65, 65);
+    background: linear-gradient(180deg, #17EFC3, #0089A7);
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -14,18 +14,26 @@ body{
     align-items: center;
 }
 
+.container h2{
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: -30px;
+}
+
+
 .container{
-    background-color: white;
-    border-radius: 15px;
-    margin: 14px;
-    max-width: 600px;
-    width: 100%;
-    box-sizing: 0 3px 5px rgba(0,0,0, 0.5);
-    overflow: hidden;
+    background-color: transparent;
+    border-radius: 10px;
+    width: 35%;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    padding: 30px 40px;
 }
 
 .header{
-    background: linear-gradient(120deg, #3acbf0, #8bb0ff 100%);
+    background: transparent;
     padding: 24px;
     text-align: center;
     color: white;
@@ -36,7 +44,7 @@ body{
 }
 
 .form-content{
-    margin-bottom: 8px;
+    margin-bottom: -25px;
     padding-bottom: 18px;
     position: relative;
 }
@@ -51,7 +59,8 @@ body{
     width: 100%;
     border-radius: 8px;
     padding: 8px;
-    border: 2px solid #dfdfdf;
+    border: 2px solid rgba(255, 255, 255, .2);
+    background: transparent;
 }
 .form-content a{
     position: absolute;
@@ -61,15 +70,18 @@ body{
 }
 
 .form button{
-    background-color: #00c3ff;
-    color: #fff;
     width: 100%;
-    border-radius: 14px;
-    padding: 10px;
-    border: 0;
-    font-size: 16px;
+    height: 45px;
+    background:  #fff;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     cursor: pointer;
-    margin-top: 14px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin-top: 25px;
 }
 
 .form-content.error input{
