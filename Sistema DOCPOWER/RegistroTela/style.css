@@ -1,3 +1,9 @@
+
+#error {
+    color: rgb(50, 14, 91);
+    visibility: visible;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -62,6 +68,11 @@ body{
     border: 2px solid rgba(255, 255, 255, .2);
     background: transparent;
 }
+.form-content input::placeholder {
+    color: #f6feff;
+    font-size: 1.8vh;
+    opacity: 78%;
+}
 .form-content a{
     position: absolute;
     bottom: -2px;
@@ -83,7 +94,15 @@ body{
     color: #333;
     font-weight: 600;
     margin-top: 25px;
+    transition: background-color 0.3s ease;
 }
+
+.form button:hover {
+    background-color: #9cfce9;
+    opacity: 70%;
+    color: black;
+}
+
 
 .form-content.error input{
     border-color: #ff3b25;
