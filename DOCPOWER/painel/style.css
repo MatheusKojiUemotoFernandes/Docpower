@@ -1,17 +1,20 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
 
-html,body{height: 100%;}
-
-body{
-  background: linear-gradient(100deg, #FFFFFF, #AFAFAF, #EBEBEB);
+html,
+body {
+  height: 100%;
 }
 
-header{
+body {
+  background: linear-gradient(100deg, #ffffff, #afafaf, #ebebeb);
+}
+
+header {
   align-items: center;
   background-color: transparent;
   padding: 10px 2%;
@@ -19,141 +22,120 @@ header{
   justify-content: space-between;
 }
 
-.logo{
+#logo {
+  width: 30vh;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  margin: 2vh;
+  transform: translate(-50%, -50%);
+}
+
+.icons-header {
   margin-top: 8px;
 }
 
-.logo h3{
+.icons-header svg {
   cursor: pointer;
 }
 
-.logo h3:hover{
+.icons-header svg:hover {
   opacity: 0.7;
 }
 
-.icons-header{
-  margin-top: 8px;
-}
-
-.icons-header svg{
-  cursor: pointer;
-}
-
-.icons-header svg:hover{
-  opacity: 0.7;
-}
-
-.info-header{
+.info-header {
   color: white;
   display: flex;
 }
 
-.info-header img{
+.info-header img {
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  margin-left:0 8px;
+  margin-left: 0 8px;
 }
 
-.info-header svg{
-  margin:0 10px;
+.info-header svg {
+  margin: 0 10px;
 }
 
-.icons-header{
+.icons-header {
   margin-left: 10px;
 }
 
-.main{
+.main {
   display: flex;
   flex-wrap: wrap;
   height: 100%;
 }
 
-.sidebar{
+.sidebar {
   width: 20%;
   color: white;
-  height: 100%;
+  height: 20%;
 }
 
-.sidebar a.sidebar-active{
+.sidebar a.sidebar-active,
+.sidebar a:hover {
   border-left: 4px solid #73b4ff;
   background-color: rgb(245, 245, 245);
   color: #777;
   font-weight: bold;
 }
 
-.sidebar a.sidebar-active > svg{
-  color: #777;
-}
-
-.sidebar h3{
+.sidebar h3 {
   color: #333;
   font-size: 20px;
   margin-left: 10px;
   margin-top: 7px;
 }
 
-.sidebar a{
+.sidebar a {
   display: block;
   text-decoration: none;
   padding: 0px 28px;
   color: #444;
 }
 
-.sidebar a:hover{
-  border-left: 4px solid #73b4ff;
-  background-color: rgb(245, 245, 245);
-  color: #777;
-  font-weight: bold;
-}
-
-.sidebar a:hover .sidebar a > svg{
-  color: #777;
-}
-
-.sidebar a > svg{
+.sidebar a > svg,
+.sidebar a.sidebar-active > svg,
+.sidebar a:hover > svg {
   color: #444;
 }
 
-.content{
+.content {
   width: 80%;
   background-color: rgb(245, 245, 245);
   padding: 20px;
 }
 
-.separator{
+.separator {
   width: 100%;
   height: 1px;
   background-color: rgb(240, 240, 240);
 }
 
-.box-info{
-  width: 80%;
-  justify-content: flex-end;
-  height:550px;
-  padding: 30px
+.box-info {
+  justify-content: center;
+  align-items: center;
+  width: 100vh;
+  display: flex;
+  height: 12vh;
 }
 
-.box-info-cloud{
-  width: 18%;
-  background: linear-gradient(90deg, #18A9BC, #18a9bc86, #00000000);
-  padding: 10px;
-  border-radius: 10px;
-  height: 35%;
+.box-info > * {
+  flex: 1;
+  margin: 0 10px;
+  
 }
 
-.box-info-buildings{
-  width: 18%;
-  background: linear-gradient(90deg, #18A9BC, #18a9bc86, #00000000);
+.box-info-cloud,
+.box-info-buildings,
+.box-info-key {
+  background: linear-gradient(10deg, #18a9bc, #18a9bc86, #00000000);
   padding: 10px;
   border-radius: 10px;
-  height: 35%;
-}
-
-.box-info-key{
-  width: 18%;
-  background: linear-gradient(90deg, #18A9BC, #18a9bc86, #00000000);
-  padding: 10px;
-  border-radius: 10px;
-  height: 35%;
 }
