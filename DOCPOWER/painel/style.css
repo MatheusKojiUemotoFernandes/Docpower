@@ -135,7 +135,6 @@ header {
 .box-info > * {
   flex: 1;
   margin: 0 10px;
-  
 }
 
 .box-info-cloud,
@@ -144,4 +143,5 @@ header {
   background: linear-gradient(10deg, #18a9bc, #18a9bc86, #00000000);
   padding: 10px;
   border-radius: 10px;
+  border: 2px solid rgb(81, 150, 163)
 }
