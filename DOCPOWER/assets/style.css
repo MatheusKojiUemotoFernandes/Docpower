@@ -1,6 +1,28 @@
 
 #error {
-    color: rgb(50, 14, 91);
+    bottom: 2px;
+    color: rgb(255, 0, 0);
+    visibility: visible;
+    position: flex;
+    overflow: hidden;
+    display: inline-block;
+    animation: revealText 2s forwards;
+    opacity: 0;
+}
+@keyframes revealText {
+    from {
+      opacity: 0;
+      height: 0;
+    }
+    to {
+      opacity: 1;
+      height: auto;
+    }
+}
+
+
+#status {
+    font-size: 2.5vh;
     visibility: visible;
 }
 
@@ -9,6 +31,7 @@
     margin: 0;
     padding: 0;
     font-family: "Poppins", sans-serif;
+    transition: 10s;
 }
 
 body{
@@ -51,8 +74,9 @@ body{
 
 .form-content{
     margin-bottom: -22px;
-    padding-bottom: 18px;
+    padding-bottom: 30px;
     position: relative;
+    transition: 1s;
 }
 
 .form-content label{
@@ -125,5 +149,5 @@ body{
 
 .container .register-link {
     font-size: 14.5px;
-    text-align:  center;;
+    text-align:  center;
 }
