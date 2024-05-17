@@ -5,13 +5,13 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 
-//session_set_cookie_params([
-//  'lifetime' => 1800,
-//  'domain' => 'localhost',
-//  'path' => '/',
-//  'secure' => true,
-//  //'httponly' => true
-//]);
+session_set_cookie_params([
+  'lifetime' => 1800,
+  'domain' => 'localhost',
+  'path' => '/',
+  'secure' => true,
+  'httponly' => true
+]);
 
 session_start();
 
