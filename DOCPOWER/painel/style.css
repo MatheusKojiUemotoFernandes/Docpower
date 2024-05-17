@@ -1,0 +1,408 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+#error {
+    color: red;
+    font-size: 1.5vh;
+}
+
+body {
+    background: linear-gradient(180deg, #ffffff, #949494);
+    min-height: 100vh;
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+/*Cabeçalho*/
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.cabecalho-back {
+    width: 280px;
+    height: 50px;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+    padding: 10px;
+    text-align: center;
+}
+
+.logo {
+    width: 180px;
+}
+
+.ok {
+    width: 18%;
+}
+
+/*Corpo - esquerda*/
+.container {
+    display: flex;
+    padding-left: 20px;
+}
+
+.esquerda {
+    width: 20.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.esquerdaback{
+    width: 100%;
+    height: 83vh;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+}
+
+.opcoes {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.opcoes h3 {
+    color: #000000;
+    font-size: 20px;
+}
+
+.opcoes a {
+    text-decoration: none;
+    padding: 0px 3px;
+    color: #2c2c2c;
+}
+
+.opcoes a.opcoes-ativa {
+    border-left:  4px solid #3892fa;
+    background-color: transparent;
+    color: #3892fa;
+    font-weight: bold;
+}
+
+.opcoes a.opcoes-ativa > svg {
+    color: #2c2c2c;
+}
+
+.opcoes a:hover {
+    border-left:  4px solid ;
+    background-color: transparent;
+    color: #3892fa;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.rolagem {
+    overflow-y: auto;
+}
+
+.rolagem a {
+    display: flex;
+    flex-direction: column;
+}
+
+/*Corpo - central*/
+.central {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 4%;
+    padding-left: 1.5%;
+}
+
+.central .formularioback {
+    width: 100%;
+    height: 40vh;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+    display: flex;
+    padding: 1%;
+}
+
+.formulario h3 {
+    padding-bottom: 3%;
+}
+
+.formulario {
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.formularioflex {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formularioflexarq {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.formulario label {
+    width: 45%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 1%;
+}
+
+#informacao {
+    width: 100%;
+    height: 5vh;
+    border: 2.5px #5CF5FF solid;
+    background: white;
+    border-radius: 8px;
+}
+
+#uf {
+    width: 20%;
+    height: 5vh;
+    border: 2.5px #5CF5FF solid;
+    background: white;
+    border-radius: 8px;
+}
+
+.baixar {
+    width: 41%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 1%;
+    padding-left: 6%;
+}
+
+input::placeholder {
+    text-align: center;
+    /* Prefixos para compatibilidade com navegadores antigos */
+    -webkit-text-align: center; /* Chrome, Safari, Opera */
+    -moz-text-align: center;    /* Firefox 19- */
+    -ms-text-align: center;     /* Internet Explorer 10- */
+    -o-text-align: center;      /* Opera 12.1- */
+}
+
+input:focus,
+input:not(:placeholder-shown) {
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.baixarcontrato {
+    width: 100%;
+    height: 5vh;
+    background: linear-gradient(90deg, #17EFC3 0%, #0089A7);
+    border-radius: 8px;
+    border: 2.5px #5CF5FF solid;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    text-decoration: none; 
+    color: #000000;
+    font-size: 14px;
+}
+
+.subir {
+    width: 60%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 1%;
+}
+#inputsubirarquivo {
+    display: none;
+}
+.subircontrato {
+    width: 92%;
+    height: 5vh;
+    background: linear-gradient(90deg, #17EFC3 0%, #0089A7);
+    border-radius: 8px;
+    border: 2.5px #5CF5FF solid;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+.subircontrato span {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.4vh;
+}
+
+.formulario .cadastrarcliente {
+    width: 88%;
+    height: 5vh;
+    background: linear-gradient(90deg, #17EFC3 0%, #0089A7);
+    border-radius: 8px;
+    border: 2.5px #5CF5FF solid;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+.central .video {
+    width: 100%;
+    height: 40vh;
+    background-color: black;
+    border-radius: 18px;
+    padding-left: 1.5%;
+}
+
+/*Corpo - direita*/
+
+.direita {
+    width: 29.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 33%;
+    padding-left: 20px;
+}
+
+.direita .flexdireita {
+    width: 100%;
+    display: flex;
+    gap: 5%;
+}
+
+.flexdireita h3 {
+    font-size: 20px;
+}
+
+.flexdireita i {
+    font-size: 80px;
+}
+
+.flexdireita p {
+    font-size: 40px;
+}
+
+button {
+    background: linear-gradient(90deg, #17EFC3 0%, #0089A7);
+    border-radius: 8px;
+    border: 2.5px #5CF5FF solid;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+
+.nuvem {
+    width: 100%;
+    height: 40vh;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+}
+
+.total-xml {
+    padding: 5%;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.total-xml button {
+    width: 100%;
+    height: 5vh;
+}
+
+.predios {
+    width: 100%;
+    height: 40vh;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+}
+
+.total-empresa {
+    padding: 5%;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.total-empresa button {
+    width: 100%;
+    height: 5vh;
+}
+
+.chaves {
+    width: 100%;
+    height: 18vh;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.total-chaves {
+    width: 100%;
+    height: 18vh;
+}
+
+.total-chaves button {
+    width: 50%;
+    height: 5vh;
+}
+
+.total-chaves h3 {
+    font-size: 20px;
+}
+
+.total-chaves p {
+    font-size: 40px;
+}
+
+.chaves i {
+    font-size: 80px;
+}
+
+.direita .atencao h3 {
+    color: red;
+    font-size: 20px;
+}
+
+.direita .atencao p {
+    font-size: 15px;
+}
+
