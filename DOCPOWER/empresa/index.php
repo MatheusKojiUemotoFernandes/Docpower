@@ -1,18 +1,16 @@
 <?php
 require_once '../assets/php/config.php';
+require_once '../assets/php/getdata.php';
 
-if (!isset($_SESSION['sucesso_login']) || !isset($_GET['empresa']) || !in_array($_GET['empresa'], $_SESSION['nomes_empresas'], true) || !in_array($_GET['cnpj'], $_SESSION['cnpj_empresas'], true)) {
+$_SESSION['empresa'] = htmlentities($_GET['empresa']);
+$_SESSION['cnpj'] = htmlentities($_GET['cnpj']);
+
+if (!isset($_SESSION['sucesso_login']) || !isset($_SESSION['empresa']) || !in_array($_SESSION['empresa'], $_SESSION['nomes_empresas'], true) || !in_array($_SESSION['cnpj'], $_SESSION['cnpj_empresas'], true)) {
     unset($_SESSION['sucesso_login']);
     $_SESSION['erro_login'] = 'Movimento suspeito detectado!';
     header('Location: ../login/index.php');
     exit;
 }
-require_once '../assets/php/getdata.php';
-
-$cnpj = filter_input(INPUT_GET, 'cnpj', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$empresa = filter_input(INPUT_GET, 'empresa', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$_SESSION['empresa'] = $empresa;
-$_SESSION['cnpj'] = $cnpj;
 ?>
 <!DOCTYPE html>
 <html lang="en">
