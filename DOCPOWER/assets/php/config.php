@@ -1,13 +1,13 @@
 <?php
 ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
 
 session_set_cookie_params([
   'lifetime' => 1800,
-  'domain' => 'localhost',
+  //'domain' => 'localhost',
   'path' => '/',
   'secure' => true,
   'httponly' => true
