@@ -48,7 +48,7 @@ $_SESSION['cnpj'] = $cnpj;
                 <div class="opcoes">
                     <h3><i class='bx bxs-school'></i>Cadastro:</h3>
                     <a href="../painel/index.php">Incluir cadastro</a>
-                    <a>Alterar cadastro</a>
+                    <!-- <a>Alterar cadastro</a> -->
                     <h3><i class='bx bxs-box'></i>Download:</h3>
                     <a>Novos arquivos</a>
                     <a>Ver todos...</a>
@@ -186,7 +186,7 @@ $_SESSION['cnpj'] = $cnpj;
                         <?php
                             echo '<p>'.$_SESSION['num_empresas'].'</p>';
                         ?>
-                        <button type="button">Ver todos</button>
+                        <!-- <button type="button">Ver todos</button> -->
                     </div>
                 </div>
 

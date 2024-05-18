@@ -41,7 +41,7 @@ if(!isset($_SESSION['sucesso_login'])) {
                 <div class="opcoes">
                     <h3><i class='bx bxs-school'></i>Cadastro:</h3>
                     <a class='opcoes-ativa'>Incluir cadastro</a>
-                    <a>Alterar cadastro</a>
+                    <!-- <a>Alterar cadastro</a> -->
                     <h3><i class='bx bxs-box'></i>Download:</h3>
                     <a>Novos arquivos</a>
                     <a>Ver todos...</a>
@@ -168,7 +168,7 @@ if(!isset($_SESSION['sucesso_login'])) {
                             <?php
                                 echo '<p>'.$_SESSION['num_empresas'].'</p>';
                             ?>
-                        <button type="button">Ver todos</button>
+                        <!-- <button type="button">Ver todos</button> -->
                     </div>
                 </div>
 
