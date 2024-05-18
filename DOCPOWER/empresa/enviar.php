@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->SMTPAuth = true;
         $mail->Username = 'comercial@docpower.com.br';
         $mail->Password = 'comercial@123';
-        $mail->SMTPSecure = 'tls';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // STARTTLS
         $mail->Port = 587;
 
         // Remetente e destinatário
