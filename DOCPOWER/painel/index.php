@@ -1,7 +1,9 @@
 <?php
 require_once '../assets/php/config.php';
 if(!isset($_SESSION['sucesso_login'])) {
+    unset($_SESSION['sucesso_login']);
     header('Location: ../login/index.php');
+    exit;
 } else {
     require_once '../assets/php/getdata.php';
 }

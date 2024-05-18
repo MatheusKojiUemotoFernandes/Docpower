@@ -34,8 +34,8 @@ button {
 }
 
 .cabecalho-back {
-    width: 280px;
-    height: 50px;
+    width: 120%;
+    height: 120%;
     background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
     border-radius: 18px;
     border: 2.5px #5CF5FF solid;
