@@ -51,7 +51,7 @@ if(!isset($_SESSION['sucesso_login'])) {
                                 if(isset($_SESSION['nomes_empresas']) && is_array($_SESSION['nomes_empresas'])) {
                                     $num_empresas = count($_SESSION['nomes_empresas']);
                                     for ($i = 0; $i < $num_empresas; $i++) {
-                                        echo "<a href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
+                                        echo "<a href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}&cnpj={$_SESSION['cnpj_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
                                     }
                                 }
                             ?>

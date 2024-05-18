@@ -60,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Inicialização do PHPMailer
     $mail = new PHPMailer(true);
     try {
+        
         // Configurações do servidor SMTP
         $mail->isSMTP();
         $mail->Host = 'smtp.titan.email';
@@ -78,8 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isHTML(true); // Define o tipo de conteúdo do e-mail como HTML
         
         $mail->Body = "<img src='https://docpower.com.br/wp-content/uploads/2024/05/Design-sem-nome-3-1024x720.png' alt='DOCPOWER' width='200' style='background-color: white;'>".
-                      "<h1 style='color: #333;'>Usuário: {$_SESSION['sucesso_login']}</h1>" .
+                      "<h2 style='color: #333;'>Usuário: {$_SESSION['sucesso_login']}</h1>" .
                       "<li>{$_SESSION['email']}</li>" .
+                      "<h2 style='color: #333;'>Empresa: {$_SESSION['empresa']}</h2>" .
+                      "<li>{$_SESSION['cnpj']}</li>".
                       "<h2 style='color: #333;'>Detalhes das Chaves</h2>" .
                       "<p><strong>Data inicial:</strong> $datainicial</p>" .
                       "<p><strong>Data final:</strong> $datafinal</p>" .
@@ -118,7 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["envio"] = "Falha ao enviar o e-mail: {$mail->ErrorInfo}";
     }
 
-    // Redireciona de volta para a página
-    header("Location: index.php?empresa={$_SESSION['empresa']}");
+    header("Location: index.php?empresa={$_SESSION['empresa']}&cnpj={$_SESSION['cnpj']}");
     exit();
 }

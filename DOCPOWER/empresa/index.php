@@ -1,16 +1,18 @@
 <?php
 require_once '../assets/php/config.php';
 
-if (!isset($_SESSION['sucesso_login']) || !isset($_GET['empresa']) || !in_array($_GET['empresa'], $_SESSION['nomes_empresas'], true)) {
+if (!isset($_SESSION['sucesso_login']) || !isset($_GET['empresa']) || !in_array($_GET['empresa'], $_SESSION['nomes_empresas'], true) || !in_array($_GET['cnpj'], $_SESSION['cnpj_empresas'], true)) {
     unset($_SESSION['sucesso_login']);
     $_SESSION['erro_login'] = 'Movimento suspeito detectado!';
     header('Location: ../login/index.php');
     exit;
 }
-
 require_once '../assets/php/getdata.php';
+
+$cnpj = filter_input(INPUT_GET, 'cnpj', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $empresa = filter_input(INPUT_GET, 'empresa', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $_SESSION['empresa'] = $empresa;
+$_SESSION['cnpj'] = $cnpj;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,10 +58,10 @@ $_SESSION['empresa'] = $empresa;
                             if(isset($_SESSION['nomes_empresas']) && is_array($_SESSION['nomes_empresas'])) {
                                 $num_empresas = count($_SESSION['nomes_empresas']);
                                 for ($i = 0; $i < $num_empresas; $i++) {
-                                    if($_SESSION['empresa'] == $_SESSION['nomes_empresas'][$i]){
-                                        echo "<a class='opcoes-ativa' href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
+                                    if($_SESSION['empresa'] == $_SESSION['nomes_empresas'][$i] && $_SESSION['cnpj'] == $_SESSION['cnpj_empresas'][$i]) {
+                                        echo "<a class='opcoes-ativa' href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}&cnpj={$_SESSION['cnpj_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
                                     } else {
-                                        echo "<a href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
+                                        echo "<a href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}&cnpj={$_SESSION['cnpj_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
                                     }
                                 }
                             }
