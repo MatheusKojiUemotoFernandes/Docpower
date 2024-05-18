@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
-    transition: 1s;
+    transition: 0.5s;
 }
 
 #error {
@@ -226,7 +226,7 @@ input:not(:placeholder-shown) {
     font-weight: 600;
     text-decoration: none; 
     color: #000000;
-    font-size: 14px;
+    font-size: 1.5vh;
 }
 
 .subir {
@@ -255,12 +255,15 @@ input:not(:placeholder-shown) {
 
 .subircontrato span {
     width: 100%;
-    height: 20vh;
-    display: flex;
+    height: 5vh;
+    border-radius: 8px;
     align-items: center;
+    display: flex;
+    white-space: nowrap;
     justify-content: center;
+    align-items: center;
     font-weight: 600;
-    font-size: 1.4vh;
+    font-size: 1.5vh;
 }
 
 .formulario .cadastrarcliente {
@@ -275,6 +278,7 @@ input:not(:placeholder-shown) {
     justify-content: center;
     align-items: center;
     font-weight: 600;
+    font-size: 1.5vh;
 }
 
 .central .video {
