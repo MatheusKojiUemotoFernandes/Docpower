@@ -408,22 +408,28 @@ button {
 }
 
 .total-chaves h3 {
-    font-size: 20px;
+    font-size: 2vh;
 }
 
 .total-chaves p {
-    font-size: 40px;
+    font-size: 4vh;
 }
 
 .chaves i {
-    font-size: 80px;
+    font-size: 10vh;
+}
+
+.atencao {
+    position: relative;
+    width: 100%;
+    height: 10%;
 }
 
 .direita .atencao h3 {
     color: red;
-    font-size: 20px;
+    font-size: 2vh;
 }
 
 .direita .atencao p {
-    font-size: 15px;
+    font-size: 1.6vh;
 }
