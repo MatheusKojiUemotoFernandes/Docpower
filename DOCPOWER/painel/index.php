@@ -1,7 +1,7 @@
 <?php
 require_once '../assets/php/config.php';
 if(!isset($_SESSION['sucesso_login'])) {
-    unset($_SESSION['sucesso_login']);
+    $_SESSION['erro_login'] = 'Movimento suspeito detectado!';
     header('Location: ../login/index.php');
     exit;
 } else {
@@ -27,7 +27,7 @@ if(!isset($_SESSION['sucesso_login'])) {
     <!--Cabeçalho-->
     <header class="cabecalho">
         <div class="cabecalho-back">
-            <h3 class="nick"><i class='bx bxs-user-rectangle'></i><?php echo $_SESSION['sucesso_login']; ?></h3>
+            <h3 id="nick"><i class='bx bxs-user-rectangle'></i><?php echo $_SESSION['sucesso_login']; ?></h3>
         </div>
 
         <img class="logo" src="../assets/images/logo.png"/><!--Adicionar Logo-->

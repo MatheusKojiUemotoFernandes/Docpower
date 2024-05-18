@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
+    transition: 1s;
 }
 
 #error {
@@ -27,17 +28,23 @@ body {
 }
 
 .cabecalho-back {
-    width: 280px;
-    height: 50px;
+    display: inline-block;
+    height: 120%;
     background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
     border-radius: 18px;
     border: 2.5px #5CF5FF solid;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
 }
 
+#nick {
+    white-space: nowrap;
+}
+
 .logo {
-    width: 180px;
+    width: 10%;
+    position: fixed;
+    left: 40%;
 }
 
 .ok {
@@ -84,7 +91,7 @@ body {
 }
 
 .opcoes a.opcoes-ativa {
-    border-left:  4px solid #3892fa;
+    border-left:  0.5vh solid #3892fa;
     background-color: transparent;
     color: #3892fa;
     font-weight: bold;
@@ -95,11 +102,12 @@ body {
 }
 
 .opcoes a:hover {
-    border-left:  4px solid ;
+    border-left:  1vh solid ;
     background-color: transparent;
     color: #3892fa;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .rolagem {
@@ -192,7 +200,6 @@ body {
 
 input::placeholder {
     text-align: center;
-    /* Prefixos para compatibilidade com navegadores antigos */
     -webkit-text-align: center; /* Chrome, Safari, Opera */
     -moz-text-align: center;    /* Firefox 19- */
     -ms-text-align: center;     /* Internet Explorer 10- */
