@@ -2,10 +2,12 @@
 require_once '../assets/php/config.php';
 require_once '../assets/php/getdata.php';
 
-$_SESSION['empresa'] = htmlentities($_GET['empresa']);
-$_SESSION['cnpj'] = htmlentities($_GET['cnpj']);
+$_SESSION['empresa_xss'] = htmlentities($_GET['empresa']);
+$_SESSION['cnpj_xss'] = htmlentities($_GET['cnpj']);
+$_SESSION['empresa'] = $_GET['empresa'];
+$_SESSION['cnpj'] = $_GET['cnpj'];
 
-if (!isset($_SESSION['sucesso_login']) || !isset($_SESSION['empresa']) || !in_array($_SESSION['empresa'], $_SESSION['nomes_empresas'], true) || !in_array($_SESSION['cnpj'], $_SESSION['cnpj_empresas'], true)) {
+if (!isset($_SESSION['sucesso_login']) || !isset($_GET['empresa'])  || !isset($_GET['cnpj']) || !in_array($_SESSION['empresa_xss'], $_SESSION['nomes_empresas'], true) || !in_array($_SESSION['cnpj'], $_SESSION['cnpj_empresas'], true)) {
     unset($_SESSION['sucesso_login']);
     $_SESSION['erro_login'] = 'Movimento suspeito detectado!';
     header('Location: ../login/index.php');
@@ -25,7 +27,7 @@ if (!isset($_SESSION['sucesso_login']) || !isset($_SESSION['empresa']) || !in_ar
     <link rel="icon" href="https://docpower.com.br/wp-content/uploads/2024/05/Design-sem-nome-6-150x150.png" sizes="32x32">
     <link rel="icon" href="https://docpower.com.br/wp-content/uploads/2024/05/Design-sem-nome-6-300x300.png" sizes="192x192">
     <?php
-        echo "<title>".$_SESSION['empresa']."</title>";
+        echo "<title>".$_SESSION['empresa_xss']."</title>";
     ?>
 </head>
 <body>
@@ -78,7 +80,7 @@ if (!isset($_SESSION['sucesso_login']) || !isset($_SESSION['empresa']) || !in_ar
                         echo '<h3>'.$_SESSION['envio'].'</h1>';
                         unset($_SESSION['envio']);
                     } else {
-                        echo '<h3>'.$_SESSION['empresa'].'</h3>';
+                        echo '<h3>'.$_SESSION['empresa_xss'].'</h3>';
                     }
                     ?>
                     <p>SELECIONE ALGUM SERVIÇO ABAIXO:</p>
