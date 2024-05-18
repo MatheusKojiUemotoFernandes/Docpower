@@ -8,18 +8,18 @@ use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Dados do formulário
-    $datainicial = $_POST['datainicial'];
-    $datafinal = $_POST['datafinal'];
-    $senha_certificado = $_POST['senha_certificado'];
+    $datainicial = $_POST['datainicial'] ?? null;
+    $datafinal = $_POST['datafinal'] ?? null;
+    $senha_certificado = $_POST['senha_certificado'] ?? null;
 
-    $nfce = $_POST['nfce'];
-    $cupom_fiscal = $_POST['cupom_fiscal']; 
-    $danfes = $_POST['danfes'];
+    $nfce = $_POST['nfce'] ?? null;
+    $cupom_fiscal = $_POST['cupom_fiscal'] ?? null;
+    $danfes = $_POST['danfes'] ?? null;
 
     // Arquivos anexados
-    $certificado = $_FILES['certificado'];
-    $sped = $_FILES['sped'];
-    $chaves_acesso = $_FILES['chaves_acesso'];
+    $certificado = $_FILES['certificado'] ?? null;
+    $sped = $_FILES['sped'] ?? null;
+    $chaves_acesso = $_FILES['chaves_acesso'] ?? null;
 
     $dataInicialFormatada = DateTime::createFromFormat('d/m/Y', $datainicial);
     $dataFinalFormatada = DateTime::createFromFormat('d/m/Y', $datafinal);
