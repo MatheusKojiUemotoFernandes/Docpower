@@ -157,7 +157,7 @@ if(!isset($_SESSION['sucesso_login'])) {
                         <i class='bx bxs-archive-in'></i>
                         <h3>Novos XML's</h3>
                         <p>0</p>
-                        <button type="button">Ver novos</button>
+                        <!-- <button type="button">Ver novos</button> -->
                     </div>
                 </div>
 
