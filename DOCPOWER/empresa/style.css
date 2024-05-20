@@ -158,7 +158,7 @@ input:not(:placeholder-shown) {
 
 .central .formularioback {
     width: 100%;
-    height: 83vh;
+    height: 100%;
     background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
     border-radius: 18px;
     border: 2.5px #5CF5FF solid;
@@ -296,6 +296,7 @@ input:not(:placeholder-shown) {
 .executarser {
     width: 70%;
     height: 6%;
+    position: relative;
 }
 
 
