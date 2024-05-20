@@ -2,18 +2,35 @@
 require_once '../assets/php/config.php';
 require_once '../assets/php/getdata.php';
 
-$_SESSION['empresa_xss'] = htmlentities($_GET['empresa']);
-$_SESSION['cnpj_xss'] = htmlentities($_GET['cnpj']);
-$_SESSION['empresa'] = $_GET['empresa'];
-$_SESSION['cnpj'] = $_GET['cnpj'];
+function sanitizeInput($input) {
+    return htmlentities($input, ENT_QUOTES, 'UTF-8');
+}
 
-if (!isset($_SESSION['sucesso_login']) || !isset($_GET['empresa'])  || !isset($_GET['cnpj']) || !in_array($_SESSION['empresa_xss'], $_SESSION['nomes_empresas'], true) || !in_array($_SESSION['cnpj'], $_SESSION['cnpj_empresas'], true)) {
-    unset($_SESSION['sucesso_login']);
+function isValidCompany($company, $cnpj) {
+    return in_array($company, $_SESSION['nomes_empresas'], true) && in_array($cnpj, $_SESSION['cnpj_empresas'], true);
+}
+
+$vars = [
+    'empresa_xss' => sanitizeInput($_GET['empresa'] ?? ''),
+    'cnpj_xss' => sanitizeInput($_GET['cnpj'] ?? ''),
+    'empresa' => $_GET['empresa'] ?? '',
+    'cnpj' => $_GET['cnpj'] ?? ''
+];
+
+$_SESSION["dados_empresa"] = $vars;
+
+if (!isset($_SESSION['sucesso_login']) ||
+    empty($_SESSION['dados_empresa']['empresa']) ||
+    empty($_SESSION['dados_empresa']['cnpj']) ||
+    !isValidCompany($_SESSION['dados_empresa']['empresa_xss'], $_SESSION['dados_empresa']['cnpj'])) {
+    
+    session_unset();
     $_SESSION['erro_login'] = 'Movimento suspeito detectado!';
     header('Location: ../login/index.php');
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +44,7 @@ if (!isset($_SESSION['sucesso_login']) || !isset($_GET['empresa'])  || !isset($_
     <link rel="icon" href="https://docpower.com.br/wp-content/uploads/2024/05/Design-sem-nome-6-150x150.png" sizes="32x32">
     <link rel="icon" href="https://docpower.com.br/wp-content/uploads/2024/05/Design-sem-nome-6-300x300.png" sizes="192x192">
     <?php
-        echo "<title>".$_SESSION['empresa_xss']."</title>";
+        echo "<title>".$_SESSION['dados_empresa']['empresa_xss']."</title>";
     ?>
 </head>
 <body>
@@ -55,13 +72,15 @@ if (!isset($_SESSION['sucesso_login']) || !isset($_GET['empresa'])  || !isset($_
                     <h3><i class='bx bxs-book'></i>Empresas:</h3>
                         <div class="rolagem">
                         <?php
-                            if(isset($_SESSION['nomes_empresas']) && is_array($_SESSION['nomes_empresas'])) {
+                            if (isset($_SESSION['nomes_empresas']) && is_array($_SESSION['nomes_empresas'])) {
                                 $num_empresas = count($_SESSION['nomes_empresas']);
-                                for ($i = 0; $i < $num_empresas; $i++) {
-                                    if($_SESSION['empresa'] == $_SESSION['nomes_empresas'][$i] && $_SESSION['cnpj'] == $_SESSION['cnpj_empresas'][$i]) {
-                                        echo "<a class='opcoes-ativa' href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}&cnpj={$_SESSION['cnpj_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
-                                    } else {
-                                        echo "<a href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}&cnpj={$_SESSION['cnpj_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
+                                foreach ($_SESSION['nomes_empresas'] as $index => $nome) {
+                                    if (isset($_SESSION['cnpj_empresas'][$index])) {
+                                        if($_SESSION['dados_empresa']['empresa_xss'] == $nome && $_SESSION['dados_empresa']['cnpj'] == $_SESSION['cnpj_empresas'][$index]){
+                                            echo "<a class='opcoes-ativa' href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$index]}&cnpj={$_SESSION['cnpj_empresas'][$index]}'>{$_SESSION['nomes_empresas'][$index]} ({$_SESSION['cnpj_empresas'][$index]})</a>";
+                                        } else {
+                                            echo "<a href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$index]}&cnpj={$_SESSION['cnpj_empresas'][$index]}'>{$_SESSION['nomes_empresas'][$index]} ({$_SESSION['cnpj_empresas'][$index]})</a>";
+                                        }
                                     }
                                 }
                             }
@@ -80,7 +99,8 @@ if (!isset($_SESSION['sucesso_login']) || !isset($_GET['empresa'])  || !isset($_
                         echo '<h3>'.$_SESSION['envio'].'</h1>';
                         unset($_SESSION['envio']);
                     } else {
-                        echo '<h3>'.$_SESSION['empresa_xss'].'</h3>';
+                        echo '<h3>'.$_SESSION['dados_empresa']['empresa_xss'].'</h3>';
+                        echo '<h3>'.$_SESSION['dados_empresa']['cnpj_xss'].'</h3>';
                     }
                     ?>
                     <p>SELECIONE ALGUM SERVIÇO ABAIXO:</p>

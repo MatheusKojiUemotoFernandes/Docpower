@@ -47,14 +47,16 @@ if(!isset($_SESSION['sucesso_login'])) {
                     <a>Ver todos...</a>
                     <h3><i class='bx bxs-book'></i>Empresas:</h3>
                         <div class="rolagem">
-                            <?php
-                                if(isset($_SESSION['nomes_empresas']) && is_array($_SESSION['nomes_empresas'])) {
-                                    $num_empresas = count($_SESSION['nomes_empresas']);
-                                    for ($i = 0; $i < $num_empresas; $i++) {
-                                        echo "<a href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$i]}&cnpj={$_SESSION['cnpj_empresas'][$i]}'>{$_SESSION['nomes_empresas'][$i]} ({$_SESSION['cnpj_empresas'][$i]})</a>";
+                        <?php
+                            if (isset($_SESSION['nomes_empresas']) && is_array($_SESSION['nomes_empresas'])) {
+                                $num_empresas = count($_SESSION['nomes_empresas']);
+                                foreach ($_SESSION['nomes_empresas'] as $index => $nome) {
+                                    if (isset($_SESSION['cnpj_empresas'][$index])) {
+                                        echo "<a href='../empresa/index.php?empresa={$_SESSION['nomes_empresas'][$index]}&cnpj={$_SESSION['cnpj_empresas'][$index]}'>{$_SESSION['nomes_empresas'][$index]} ({$_SESSION['cnpj_empresas'][$index]})</a>";
                                     }
                                 }
-                            ?>
+                            }
+                        ?>
                         </div>
                 </div>
             </div>

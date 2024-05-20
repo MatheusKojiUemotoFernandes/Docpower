@@ -7,7 +7,6 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Dados do formulário
     $datainicial = $_POST['datainicial'] ?? null;
     $datafinal = $_POST['datafinal'] ?? null;
     $senha_certificado = $_POST['senha_certificado'] ?? null;
@@ -16,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cupom_fiscal = $_POST['cupom_fiscal'] ?? null;
     $danfes = $_POST['danfes'] ?? null;
 
-    // Arquivos anexados
     $certificado = $_FILES['certificado'] ?? null;
     $sped = $_FILES['sped'] ?? null;
     $chaves_acesso = $_FILES['chaves_acesso'] ?? null;
@@ -26,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $erros = [];
 
-    // Validação de campos obrigatórios
     if (empty($nfce) && empty($cupom_fiscal) && empty($danfes)) {
         $erros["checkbox"] = "Selecione pelo menos uma opção.";
     }
@@ -50,33 +47,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $erros["chaves_acesso"] = "Você deve postar a chave de acesso!";
     }
 
-    // Se houver erros, redirecione de volta com os erros
     if (!empty($erros)) {
         $_SESSION["erros"] = $erros;
         header("Location: index.php?empresa={$_SESSION['empresa']}");
         exit();
     }
 
-    // Inicialização do PHPMailer
     $mail = new PHPMailer(true);
     try {
         
-        // Configurações do servidor SMTP
         $mail->isSMTP();
         $mail->Host = 'smtp.titan.email';
         $mail->SMTPAuth = true;
         $mail->Username = 'comercial@docpower.com.br';
         $mail->Password = 'comercial@123';
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // STARTTLS
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        // Remetente e destinatário
         $mail->setFrom('comercial@docpower.com.br', "DOCPOWER - {$_SESSION['sucesso_login']}");
         $mail->addAddress('comercial@docpower.com.br', "{$_SESSION['sucesso_login']}");
 
-        // Construção do corpo do e-mail
         $mail->Subject = 'NOVO SERVIÇO DOCPOWER';
-        $mail->isHTML(true); // Define o tipo de conteúdo do e-mail como HTML
+        $mail->isHTML(true);
         
         $mail->Body = "<img src='https://docpower.com.br/wp-content/uploads/2024/05/Design-sem-nome-3-1024x720.png' alt='DOCPOWER' width='200' style='background-color: white;'>".
                       "<h2 style='color: #333;'>Usuário: {$_SESSION['sucesso_login']}</h1>" .
@@ -88,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       "<p><strong>Data final:</strong> $datafinal</p>" .
                       "<p><strong>Senha certificado:</strong> $senha_certificado</p>";
         
-        // Adiciona certificados selecionados ao corpo do e-mail
         $certificados_selecionados = '';
         if ($nfce === 'on') {
             $certificados_selecionados .= '<li>NFC-E</li>';
@@ -105,13 +96,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $extencao_sped = pathinfo($_FILES['sped']['name'], PATHINFO_EXTENSION);
         $extencao_chaves_acesso = pathinfo($_FILES['chaves_acesso']['name'], PATHINFO_EXTENSION);
 
-        // Adiciona anexos ao e-mail
+
         $mail->addAttachment($_FILES['certificado']['tmp_name'], "certificado.$extencao_certificado");
         $mail->addAttachment($_FILES['sped']['tmp_name'], "sped.$extencao_sped");
         $mail->addAttachment($_FILES['chaves_acesso']['tmp_name'], "chaves_acesso.$extencao_chaves_acesso");
 
         $mail->CharSet = 'UTF-8';
-        // Envio do e-mail
+
         if ($mail->send()) {
             $_SESSION["envio"] = "E-mail enviado com sucesso!";
         } else {
