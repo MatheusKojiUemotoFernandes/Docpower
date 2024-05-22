@@ -44,14 +44,58 @@ body {
 .logo {
     width: 10%;
     position: fixed;
-    left: 40%;
+    left: 45%;
 }
 
 .ok {
     width: 18%;
 }
 
-/*Corpo - esquerda*/
+.sair {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.sair i {
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+    transition: margin-right 0.3s ease; /* Transição suave para o movimento do ícone */
+}
+
+.sair a {
+    text-decoration: none;
+    padding: 0px 3px;
+    color: #2c2c2c;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 0;
+    opacity: 0;
+    transition: max-width 0.3s ease, opacity 0.3s ease;
+    display: inline-block; /* Necessário para a transição de largura funcionar */
+}
+
+.sair:hover a {
+    text-decoration: none;
+    padding: 0px 3px;
+    color: #2c2c2c;
+    max-width: 100px; /* Ajuste conforme necessário para acomodar o texto */
+    opacity: 1;
+}
+
+input::placeholder {
+    text-align: center;
+    -webkit-text-align: center; /* Chrome, Safari, Opera */
+    -moz-text-align: center;    /* Firefox 19- */
+    -ms-text-align: center;     /* Internet Explorer 10- */
+    -o-text-align: center;      /* Opera 12.1- */
+}
+
+input:focus,
+input:not(:placeholder-shown) {
+    text-align: center;
+    letter-spacing: 2px;
+}
 .container {
     display: flex;
     padding-left: 20px;
@@ -64,7 +108,7 @@ body {
     gap: 20px;
 }
 
-.esquerdaback{
+.esquerdaback {
     width: 100%;
     height: 83vh;
     background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
@@ -77,6 +121,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
+    flex-direction: column;
 }
 
 .opcoes h3 {
@@ -111,12 +157,29 @@ body {
 }
 
 .rolagem {
-    overflow-y: auto;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 60vh; /* Ajusta a altura para 50% do tamanho da tela */
+    min-height: 1rem; /* Altura mínima */
+    max-height: 70rem; /* Altura máxima */
 }
 
 .rolagem a {
     display: flex;
     flex-direction: column;
+}
+
+.rolagem::-webkit-scrollbar {
+    width: 0.5rem;
+    background-color: transparent;
+    border: 0.1rem;
+}
+
+.rolagem::-webkit-scrollbar-thumb {
+    background-color: rgb(198, 255, 250);
+    border-radius: 10px;
 }
 
 /*Corpo - central*/
@@ -196,20 +259,6 @@ body {
     align-items: center;
     padding: 1%;
     padding-left: 6%;
-}
-
-input::placeholder {
-    text-align: center;
-    -webkit-text-align: center; /* Chrome, Safari, Opera */
-    -moz-text-align: center;    /* Firefox 19- */
-    -ms-text-align: center;     /* Internet Explorer 10- */
-    -o-text-align: center;      /* Opera 12.1- */
-}
-
-input:focus,
-input:not(:placeholder-shown) {
-    text-align: center;
-    letter-spacing: 2px;
 }
 
 .baixarcontrato {

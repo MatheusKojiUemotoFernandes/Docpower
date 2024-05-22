@@ -56,11 +56,43 @@ button {
 .logo {
     width: 10%;
     position: fixed;
-    left: 40%;
+    left: 45%;
 }
 
 .ok {
     width: 18%;
+}
+
+.sair {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.sair i {
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+    transition: margin-right 0.3s ease; /* Transição suave para o movimento do ícone */
+}
+
+.sair a {
+    text-decoration: none;
+    padding: 0px 3px;
+    color: #2c2c2c;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 0;
+    opacity: 0;
+    transition: max-width 0.3s ease, opacity 0.3s ease;
+    display: inline-block; /* Necessário para a transição de largura funcionar */
+}
+
+.sair:hover a {
+    text-decoration: none;
+    padding: 0px 3px;
+    color: #2c2c2c;
+    max-width: 100px; /* Ajuste conforme necessário para acomodar o texto */
+    opacity: 1;
 }
 
 /*Corpo - esquerda*/

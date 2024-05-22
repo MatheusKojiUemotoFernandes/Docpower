@@ -29,7 +29,7 @@ if (!isset($_SESSION['sucesso_login']) ||
     session_destroy();
     session_start();
     $_SESSION['erros']['login'] = 'Movimento suspeito detectado!';
-    header('Location: ../login/index.php');
+    header('Location: ../login');
     exit;
 }
 ?>
@@ -58,7 +58,10 @@ if (!isset($_SESSION['sucesso_login']) ||
         </div>
 
         <img class="logo" src="../assets/images/logo.png"/><!--Adicionar Logo-->
-        <div class="ok"></div>
+        <div class="sair">
+            <i class='bx bxs-door-open'></i>
+            <a href="../assets/php/sair.php">Sair</a>
+        </div>
     </header>
 
     <section class="container">
@@ -67,11 +70,10 @@ if (!isset($_SESSION['sucesso_login']) ||
             <div class="esquerdaback">
                 <div class="opcoes">
                     <h3><i class='bx bxs-school'></i>Cadastro:</h3>
-                    <a href="../painel/index.php">Incluir cadastro</a>
+                    <a href="../painel/">Incluir cadastro</a>
                     <!-- <a>Alterar cadastro</a> -->
                     <h3><i class='bx bxs-box'></i>Download:</h3>
-                    <a>Novos arquivos</a>
-                    <a>Ver todos...</a>
+                    <a href="../files">Ver todos</a>
                     <h3><i class='bx bxs-book'></i>Empresas:</h3>
                         <div class="rolagem">
                         <?php

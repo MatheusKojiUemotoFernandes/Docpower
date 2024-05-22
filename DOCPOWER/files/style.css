@@ -1,0 +1,290 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    transition: 0.5s;
+}
+#error {
+    color: red;
+    font-size: 1.5vh;
+}
+
+body {
+    background: linear-gradient(180deg, #ffffff, #949494);
+    min-height: 100vh;
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+/*Cabeçalho*/
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.cabecalho-back {
+    display: inline-block;
+    height: 120%;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+    padding: 15px;
+    text-align: center;
+}
+
+#nick {
+    white-space: nowrap;
+}
+
+.logo {
+    width: 10%;
+    position: fixed;
+    left: 45%;
+}
+
+.sair {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.sair i {
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+    transition: margin-right 0.3s ease; /* Transição suave para o movimento do ícone */
+}
+
+.sair a {
+    text-decoration: none;
+    padding: 0px 3px;
+    color: #2c2c2c;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 0;
+    opacity: 0;
+    transition: max-width 0.3s ease, opacity 0.3s ease;
+    display: inline-block; /* Necessário para a transição de largura funcionar */
+}
+
+.sair:hover a {
+    text-decoration: none;
+    padding: 0px 3px;
+    color: #2c2c2c;
+    max-width: 100px; /* Ajuste conforme necessário para acomodar o texto */
+    opacity: 1;
+}
+
+input::placeholder {
+    text-align: center;
+    -webkit-text-align: center; /* Chrome, Safari, Opera */
+    -moz-text-align: center;    /* Firefox 19- */
+    -ms-text-align: center;     /* Internet Explorer 10- */
+    -o-text-align: center;      /* Opera 12.1- */
+}
+
+input:focus,
+input:not(:placeholder-shown) {
+    text-align: center;
+    letter-spacing: 2px;
+}
+.container {
+    display: flex;
+    padding-left: 20px;
+}
+
+.esquerda {
+    width: 20.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.esquerdaback {
+    width: 100%;
+    height: 83vh;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+}
+
+.opcoes {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+.opcoes h3 {
+    color: #000000;
+    font-size: 20px;
+}
+
+.opcoes a {
+    text-decoration: none;
+    padding: 0px 3px;
+    color: #2c2c2c;
+}
+
+.opcoes a.opcoes-ativa {
+    border-left:  0.5vh solid #3892fa;
+    background-color: transparent;
+    color: #3892fa;
+    font-weight: bold;
+}
+
+.opcoes a.opcoes-ativa > svg {
+    color: #2c2c2c;
+}
+
+.opcoes a:hover {
+    border-left:  1vh solid ;
+    background-color: transparent;
+    color: #3892fa;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.rolagem .divisao {
+    padding-bottom: 4%;
+}
+
+.rolagem {
+    gap: 4%;
+    text-align: left;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 60vh; /* Ajusta a altura para 50% do tamanho da tela */
+    min-height: 1rem; /* Altura mínima */
+    max-height: 70rem; /* Altura máxima */
+}
+
+.rolagem a {
+    display: flex;
+    flex-direction: column;
+}
+
+.rolagem::-webkit-scrollbar {
+    padding: 10vh;
+    width: 0.5rem;
+    background-color: transparent;
+    border: 0.1rem;
+}
+
+.rolagem::-webkit-scrollbar-thumb {
+    background-color: rgb(198, 255, 250);
+    border-radius: 10px;
+}
+
+/*Corpo - central*/
+
+.todos {
+    padding-bottom: 10%;
+    padding-left: 1.5%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    height: 83vh;
+    gap: 4%;
+}
+
+.geral {
+    width: 100%;
+    height: 83vh;
+    display: flex;
+    gap: 5%;
+}
+
+.download {
+    width: 45%;
+    height: 70vh;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4%;
+}
+
+.historico {
+    width: 45%;
+    height: 70vh;
+    background: linear-gradient(90deg, #A7FFFA 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4%;
+}
+
+.espaco {
+    justify-content: center;
+    width: 97%;
+    height: 7rem;
+    background: linear-gradient(90deg, #7ee2dd 0%, rgba(100.09, 153, 149.83, 0.10) 100%);
+    border-radius: 18px;
+    border: 2.5px #5CF5FF solid;
+    display: flex;
+    align-items: center;
+}
+
+.dados p {
+    font-size: 1rem;
+}
+
+.dados {
+    padding: 3%;
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.botao {
+    font-size: 1.4rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.icone {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 300%;
+}
+
+.icone h3 {
+    font-size: 20px;
+}
+.atencao {
+    position: relative;
+    width: 100%;
+    height: 10%;
+}
+
+.atencao h3 {
+    color: red;
+    font-size: 2vh;
+}
+
+.atencao p {
+    font-size: 1.6vh;
+}
