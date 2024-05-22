@@ -1,7 +1,11 @@
 <?php
 require_once '../assets/php/config.php';
+include("../assets/php/functions.php");
 if(!isset($_SESSION['sucesso_login'])) {
-    $_SESSION['erro_login'] = 'Movimento suspeito detectado!';
+    session_unset();
+    session_destroy();
+    session_start();
+    $_SESSION['erros']['login'] = 'Movimento suspeito detectado!';
     header('Location: ../login/index.php');
     exit;
 } else {
@@ -65,6 +69,7 @@ if(!isset($_SESSION['sucesso_login'])) {
         <div class="central">
             <div class="formularioback">
                 <form id="formulario" class="formulario" action="cadastrar.php" method="POST" enctype="multipart/form-data">
+                    <?php echo generateToken(); ?>
                     <?php
                         if(isset($_SESSION['erros']['form'])) {
                             echo '<h3 id="error">'.$_SESSION['erros']['form'].'</h3>';
@@ -77,7 +82,13 @@ if(!isset($_SESSION['sucesso_login'])) {
                     ?>
                         <div class="formularioflex">
                             <label for="cnpj">
-                                <input name="cnpj" type="text" id="informacao" placeholder="CNPJ:">
+                                <input 
+                                    name="cnpj" 
+                                    type="text" 
+                                    id="informacao" 
+                                    placeholder="CNPJ:"
+                                    
+                                />
                                 <?php
                                     if(isset($_SESSION['erros']['cnpj'])) {
                                         echo '<span id="error">'.$_SESSION['erros']['cnpj'].'</span>';
@@ -87,7 +98,13 @@ if(!isset($_SESSION['sucesso_login'])) {
                             </label>
     
                             <label for="razao">
-                                <input name="razao" type="text" id="informacao" placeholder="RAZÃO SOCIAL:">
+                                <input 
+                                    name="razao" 
+                                    type="text" 
+                                    id="informacao" 
+                                    placeholder="RAZÃO SOCIAL:"
+                                    
+                                />
                                 <?php
                                     if(isset($_SESSION['erros']['razao'])) {
                                         echo '<span id="error">'.$_SESSION['erros']['razao'].'</span>';
@@ -99,7 +116,13 @@ if(!isset($_SESSION['sucesso_login'])) {
 
                         <div class="formularioflex">
                             <label for="cidade">
-                                <input name="cidade" type="text" id="informacao" placeholder="CIDADE:">
+                                <input 
+                                    name="cidade" 
+                                    type="text" 
+                                    id="informacao" 
+                                    placeholder="CIDADE:"
+                                    
+                                />
                                 <?php
                                     if(isset($_SESSION['erros']['cidade'])) {
                                         echo '<span id="error">'.$_SESSION['erros']['cidade'].'</span>';
@@ -109,7 +132,13 @@ if(!isset($_SESSION['sucesso_login'])) {
                             </label>
 
                             <label for="uf">
-                                <input name="uf" type="text" id="uf" placeholder="UF:">
+                                <input 
+                                    name="uf" 
+                                    type="text" 
+                                    id="uf" 
+                                    placeholder="UF:"
+                                    
+                                />
                                 <?php
                                     if(isset($_SESSION['erros']['uf'])) {
                                         echo '<span id="error">'.$_SESSION['erros']['uf'].'</span>';
@@ -119,7 +148,7 @@ if(!isset($_SESSION['sucesso_login'])) {
                             </label>
                         </div>
 
-                        <div class="formularioflexarq">
+                        <!--<div class="formularioflexarq">
                             <div class="baixar">
                                 <a class="baixarcontrato" href="../data/contrato.pdf" target="_blank">Baixar contrato</a>
                             </div>
@@ -138,7 +167,7 @@ if(!isset($_SESSION['sucesso_login'])) {
                                     }
                                 ?>
                             </div>
-                        </div>
+                        </div>-->
 
                     <button class="cadastrarcliente" type="submit">
                         Cadastrar cliente

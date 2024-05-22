@@ -1,6 +1,7 @@
 <?php
 require_once '../assets/php/config.php';
 require_once '../assets/php/getdata.php';
+include("../assets/php/functions.php");
 
 function sanitizeInput($input) {
     return htmlentities($input, ENT_QUOTES, 'UTF-8');
@@ -11,10 +12,10 @@ function isValidCompany($company, $cnpj) {
 }
 
 $vars = [
-    'empresa_xss' => sanitizeInput($_GET['empresa'] ?? ''),
-    'cnpj_xss' => sanitizeInput($_GET['cnpj'] ?? ''),
-    'empresa' => $_GET['empresa'] ?? '',
-    'cnpj' => $_GET['cnpj'] ?? ''
+    'empresa_xss' => sanitizeInput($_GET['empresa'] ?? null),
+    'cnpj_xss' => sanitizeInput($_GET['cnpj'] ?? null),
+    'empresa' => $_GET['empresa'] ?? null,
+    'cnpj' => $_GET['cnpj'] ?? null
 ];
 
 $_SESSION["dados_empresa"] = $vars;
@@ -25,7 +26,9 @@ if (!isset($_SESSION['sucesso_login']) ||
     !isValidCompany($_SESSION['dados_empresa']['empresa_xss'], $_SESSION['dados_empresa']['cnpj'])) {
     
     session_unset();
-    $_SESSION['erro_login'] = 'Movimento suspeito detectado!';
+    session_destroy();
+    session_start();
+    $_SESSION['erros']['login'] = 'Movimento suspeito detectado!';
     header('Location: ../login/index.php');
     exit;
 }
@@ -94,6 +97,7 @@ if (!isset($_SESSION['sucesso_login']) ||
         <div class="central">
             <div class="formularioback">
                 <form id="formulario" class="formulario" action="enviar.php" method="POST" enctype="multipart/form-data">
+                    <?php echo generateToken(); ?>
                     <?php
                     if(isset($_SESSION['envio'])){
                         echo '<h3>'.$_SESSION['envio'].'</h1>';
@@ -107,17 +111,32 @@ if (!isset($_SESSION['sucesso_login']) ||
                     <div class="checkboxflex">
                         <label for="servicos">
                             <span class="box">NFC-E </span>
-                            <input type="checkbox" class="check" name="nfce"/>
+                            <input 
+                                type="checkbox" 
+                                class="check" 
+                                name="nfce"
+                                
+                            />
                         </label>
 
                         <label for="servicos">
                             <span class="box">CUPOM FISCAL </span>
-                            <input type="checkbox" class="check" name="cupom_fiscal"/>
+                            <input 
+                                type="checkbox" 
+                                class="check" 
+                                name="cupom_fiscal"
+                                
+                            />
                         </label>
 
                         <label for="servicos">
                             <span class="box">DANFES </span>
-                            <input type="checkbox" class="check" name="danfes"/>
+                            <input 
+                                type="checkbox" 
+                                class="check" 
+                                name="danfes"
+                                
+                            />
                         </label>
                             <?php
                                 if(isset($_SESSION['erros']['checkbox'])) {
@@ -129,22 +148,24 @@ if (!isset($_SESSION['sucesso_login']) ||
                     <div class="data">
                         <label for="datainicio">
                             <input
-                            name="datainicial"
-                            type="text"
-                            id="datainicial"
-                            placeholder="Data inicial"
-                            pattern="\d{2}/\d{2}/\d{4}"
-                            title="Digite uma data no formato dd/mm/yyyy"
+                                name="datainicial"
+                                type="text"
+                                id="datainicial"
+                                placeholder="Data inicial"
+                                pattern="\d{2}/\d{2}/\d{4}"
+                                title="Digite uma data no formato dd/mm/yyyy"
+                                
                             />
                         </label>
                         <label for="datafim">
                             <input
-                            name="datafinal"
-                            type="text"
-                            id="datafinal"
-                            placeholder="Data final"
-                            pattern="\d{2}/\d{2}/\d{4}"
-                            title="Digite uma data no formato dd/mm/yyyy"
+                                name="datafinal"
+                                type="text"
+                                id="datafinal"
+                                placeholder="Data final"
+                                pattern="\d{2}/\d{2}/\d{4}"
+                                title="Digite uma data no formato dd/mm/yyyy"
+                                
                             />
                         </label>
                             <?php
@@ -156,25 +177,51 @@ if (!isset($_SESSION['sucesso_login']) ||
                     </div>
                     <div class="documentoflex">
                         <label class="docuflex" tabindex="0">
-                            <input id="certificado" name="certificado" type="file" class="inputcertificado" accept="application/pdf"/>
+                            <input 
+                                id="certificado" 
+                                name="certificado" 
+                                type="file" 
+                                class="inputcertificado" 
+                                accept=".pfx,application/x-pkcs12,application/pkcs12,application/x-pkcs7-certificates,application/x-x509-ca-cert"
+                                
+                            />
                             <span id="certificado_arquivo">Inserir CERTIFICADO:</span>
                         </label>
 
                         <label class="docuflex" tabindex="0">
-                            <input id="sped" name="sped" type="file" class="inputsped"/>
+                            <input 
+                                id="sped" 
+                                name="sped" 
+                                type="file" 
+                                class="inputsped"
+                                
+                            />
                             <span id="sped_arquivo">Inserir SPED:</span>
                         </label>
                     </div>
 
                     <div class="senhacertificado">
                         <label class="senhac" for="senha">
-                            <input type="text" id="senhace" placeholder="Senha CERTIFICADO:" name="senha_certificado"/>
+                            <input 
+                                type="text" 
+                                id="senhace" 
+                                placeholder="Senha CERTIFICADO:" 
+                                name="senha_certificado"
+                                
+                            />
                         </label>
                     </div>
                     
                     <div class="chaveflex">
                         <label class="chaflex" tabindex="0">
-                            <input id="chaves" type="file" class="inputcertificado" name="chaves_acesso"/>
+                            <input 
+                                id="chaves" 
+                                type="file" 
+                                class="inputcertificado" 
+                                name="chaves_acesso" 
+                                accept=".rar,.zip,.7z,.tar"
+                                
+                            />
                             <span id="chaves_arquivo">Inserir CHAVES DE ACESSO:</span>
                         </label>
                     </div>
@@ -229,6 +276,22 @@ if (!isset($_SESSION['sucesso_login']) ||
         </div>
     </section>
     <script>
+    var dataAtual = new Date();
+
+    // Formate a data como dd/mm/yyyy
+    var dia = dataAtual.getDate();
+    var mes = dataAtual.getMonth() + 1;
+    var ano = dataAtual.getFullYear();
+    
+    if (dia < 10) {
+        dia = '0' + dia;
+    }
+    if (mes < 10) {
+        mes = '0' + mes;
+    }
+
+    document.getElementById('datainicial').value = dia + '/' + mes + '/' + ano;
+
     document.addEventListener('DOMContentLoaded', function() {
         function handleFileChange(event, outputElementId, defaultText) {
             const file = event.target.files[0];

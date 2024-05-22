@@ -1,5 +1,6 @@
 <?php
 require_once '../assets/php/config.php';
+include("../assets/php/functions.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,18 +22,16 @@ require_once '../assets/php/config.php';
     <div class="container">
         <section class="header">
             <?php
-                if(isset($_SESSION['sucesso_login'])) {
-                    echo '<h2 id="status">'.$_SESSION['sucesso_login'].'</h2>';
-                    unset($_SESSION['sucesso_login']);
-                } elseif (isset($_SESSION['erro_login'])){
-                    echo '<h2 id="status">'.$_SESSION['erro_login'].'</h2>';
-                    unset($_SESSION['erro_login']);
+                if (isset($_SESSION['erros']['login'])){
+                    echo '<h2 id="status">'.$_SESSION['erros']['login'].'</h2>';
+                    unset($_SESSION['erros']['login']);
                 } else {
                     echo '<h2>Login:</h2>';
                 }
                 ?>
         </section>
         <form action="login.php" method="POST" class="form" id="form">
+            <?php echo generateToken(); ?>
             <div class="form-content">
                 <label for="email"></label>
                 <input
@@ -45,8 +44,6 @@ require_once '../assets/php/config.php';
                 if(isset($_SESSION['erros']['email'])) {
                     echo '<a id="error">'.$_SESSION['erros']['email'].'</a>';
                     unset($_SESSION['erros']['email']);
-                } else {
-                    echo '<a>Aqui vai a mensagem de erro</a>';
                 }
                 ?>
             </div>
@@ -63,8 +60,6 @@ require_once '../assets/php/config.php';
                 if(isset($_SESSION['erros']['senha'])) {
                     echo '<a id="error">'.$_SESSION['erros']['senha'].'</a>';
                     unset($_SESSION['erros']['senha']);
-                } else {
-                    echo '<a>Aqui vai a mensagem de erro</a>';
                 }
                 ?>
             </div>

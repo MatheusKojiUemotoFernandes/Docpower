@@ -1,5 +1,6 @@
 <?php
 require_once '../assets/php/config.php';
+include("../assets/php/functions.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,10 +22,7 @@ require_once '../assets/php/config.php';
     <div class="container">
         <section class="header">
             <?php
-                if(isset($_SESSION['sucesso_cadastro'])) {
-                    echo '<h2 id="status">'.$_SESSION['sucesso_cadastro'].'</h2>';
-                    unset($_SESSION['sucesso_cadastro']);
-                } elseif (isset($_SESSION['erro_cadastro'])){
+                if (isset($_SESSION['erro_cadastro'])){
                     echo '<h2 id="status">'.$_SESSION['erro_cadastro'].'</h2>';
                     unset($_SESSION['erro_cadastro']);
                 } else {
@@ -33,111 +31,124 @@ require_once '../assets/php/config.php';
             ?>
         </section>
         <form action="registro.php" method="POST" class="form" id="form">
+            <?php echo generateToken(); ?>
             <div class="form-content">
-                <label for="docu"></label>
-                <input
-                    name="docu"
-                    type="text"
-                    id="docu"
-                    placeholder="CNPJ/CPF:"
-                />
-                <?php
-                    if(isset($_SESSION['erros']['documento'])) {
-                        echo '<a id="error">'.$_SESSION['erros']['documento'].'</a>';
-                        unset($_SESSION['erros']['documento']);
-                    } else {
-                        echo '<a>Aqui vai a mensagem de erro</a>';
-                    }
-                ?>
+                <label></label>
+                    <input
+                        name="documento"
+                        type="text"
+                        id="docu"
+                        placeholder="CNPJ/CPF:"
+                    />
+                    <?php
+                        if(isset($_SESSION['erros']['documento'])) {
+                            echo '<a id="error">'.$_SESSION['erros']['documento'].'</a>';
+                            unset($_SESSION['erros']['documento']);
+                        }
+                    ?>
             </div>
             <div class="form-content">
-                <label for="nome"></label>
-                <input
-                    name="nome"
-                    type="text"
-                    id="nome"
-                    placeholder="Nome completo:"
-                />
-                <?php
-                    if(isset($_SESSION['erros']['nome'])) {
-                        echo '<a id="error">'.$_SESSION['erros']['nome'].'</a>';
-                        unset($_SESSION['erros']['nome']);
-                    } else {
-                        echo '<a>Aqui vai a mensagem de erro</a>';
-                    }
-                ?>
+                <label></label>
+                    <input
+                        name="nome"
+                        type="text"
+                        id="nome"
+                        placeholder="Nome completo:"
+                        
+                    />
+                    <?php
+                        if(isset($_SESSION['erros']['nome'])) {
+                            echo '<a id="error">'.$_SESSION['erros']['nome'].'</a>';
+                            unset($_SESSION['erros']['nome']);
+                        }
+                    ?>
             </div>
 
             <div class="form-content">
-                <label for="tele"></label>
-                <input
-                    name="tele"
-                    type="tel"
-                    id="tele"
-                    placeholder="Telefone:"
-                />
-                <?php
-                    if(isset($_SESSION['erros']['tele'])) {
-                        echo '<a id="error">'.$_SESSION['erros']['tele'].'</a>';
-                        unset($_SESSION['erros']['tele']);
-                    } else {
-                        echo '<a>Aqui vai a mensagem de erro</a>';
-                    }
-                ?>
+                <label></label>
+                    <input
+                        name="telefone"
+                        type="text"
+                        id="tele"
+                        placeholder="Telefone:"
+                        
+                    />
+                    <?php
+                        if(isset($_SESSION['erros']['telefone'])) {
+                            echo '<a id="error">'.$_SESSION['erros']['telefone'].'</a>';
+                            unset($_SESSION['erros']['telefone']);
+                        }
+                    ?>
             </div>
 
             <div class="form-content">
-                <label for="email"></label>
-                <input
-                    name="email"
-                    type="email"
-                    id="email"
-                    placeholder="E-mail:"
-                />
-                <?php
-                    if(isset($_SESSION['erros']['email'])) {
-                        echo '<a id="error">'.$_SESSION['erros']['email'].'</a>';
-                        unset($_SESSION['erros']['email']);
-                    } else {
-                        echo '<a>Aqui vai a mensagem de erro</a>';
-                    }
-                ?>
+                <label></label>
+                    <input
+                        name="email"
+                        type="email"
+                        id="email"
+                        placeholder="E-mail:"
+                        
+                    />
+                    <?php
+                        if(isset($_SESSION['erros']['email'])) {
+                            echo '<a id="error">'.$_SESSION['erros']['email'].'</a>';
+                            unset($_SESSION['erros']['email']);
+                        }
+                    ?>
             </div>
 
             <div class="form-content">
-                <label for="password"></label>
-                <input
-                    name="senha"
-                    type="password"
-                    id="password"
-                    placeholder="Senha:"
-                />
-                <?php
-                    if(isset($_SESSION['erros']['senha'])) {
-                        echo '<a id="error">'.$_SESSION['erros']['senha'].'</a>';
-                        unset($_SESSION['erros']['senha']);
-                    } else {
-                        echo '<a>Aqui vai a mensagem de erro</a>';
-                    }
-                ?>
+                <label></label>
+                    <input
+                        name="senha"
+                        type="password"
+                        id="password"
+                        placeholder="Senha:"
+                        
+                    />
+                    <?php
+                        if(isset($_SESSION['erros']['senha'])) {
+                            echo '<a id="error">'.$_SESSION['erros']['senha'].'</a>';
+                            unset($_SESSION['erros']['senha']);
+                        }
+                    ?>
             </div>
 
             <div class="form-content">
-                <label for="password-confirmation"></label>
-                <input
-                    name="senha_check"
-                    type="password"
-                    id="password-confirmation"
-                    placeholder="Confirme sua senha:"
-                />
-                <?php
-                    if(isset($_SESSION['erros']['senha_check'])) {
-                        echo '<a id="error">'.$_SESSION['erros']['senha_check'].'</a>';
-                        unset($_SESSION['erros']['senha_check']);
-                    } else {
-                        echo '<a>Aqui vai a mensagem de erro</a>';
-                    }
-                ?>
+                <label></label>
+                    <input
+                        name="senha_check"
+                        type="password"
+                        id="password-confirmation"
+                        placeholder="Confirme sua senha:"
+                        
+                    />
+                    <?php
+                        if(isset($_SESSION['erros']['senha_check'])) {
+                            echo '<a id="error">'.$_SESSION['erros']['senha_check'].'</a>';
+                            unset($_SESSION['erros']['senha_check']);
+                        }
+                    ?>
+            </div>
+            <div class="form-content">
+                <label>
+                    <div class="termos">
+                        <input 
+                            type="checkbox" 
+                            class="check" 
+                            name="termos" 
+                            
+                        />
+                        <p>Eu aceito os <a id="termos" href="../data/termos.pdf" target="_blank">termos</a></p>
+                    </div>
+                </label>
+                    <?php
+                        if(isset($_SESSION['erros']['termos'])) {
+                            echo '<a id="error">'.$_SESSION['erros']['termos'].'</a>';
+                            unset($_SESSION['erros']['termos']);
+                        }
+                    ?>
             </div>
             <button type="submit"><span>Criar conta</span></button>
         </form>
