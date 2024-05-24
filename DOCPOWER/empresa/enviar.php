@@ -13,9 +13,12 @@ checkToken($token);
 $datainicial = $_POST['datainicial'] ?? null;
 $datafinal = $_POST['datafinal'] ?? null;
 $senha_certificado = $_POST['senha_certificado'] ?? null;
+
 $nfce = $_POST['nfce'] ?? null;
 $cupom_fiscal = $_POST['cupom_fiscal'] ?? null;
 $danfes = $_POST['danfes'] ?? null;
+$nfse = $_POST['nfse'] ?? null;
+
 $certificado = $_FILES['certificado'] ?? null;
 $sped = $_FILES['sped'] ?? null;
 $chaves_acesso = $_FILES['chaves_acesso'] ?? null;
@@ -23,7 +26,7 @@ $dataInicialFormatada = DateTime::createFromFormat('d/m/Y', $datainicial);
 $dataFinalFormatada = DateTime::createFromFormat('d/m/Y', $datafinal);
 $erros = [];
 
-if (empty($nfce) && empty($cupom_fiscal) && empty($danfes)) {
+if (empty($nfce) && empty($cupom_fiscal) && empty($danfes) && empty($nfse)) {
     $erros["checkbox"] = "Selecione pelo menos uma opção.";
 }
 
@@ -85,6 +88,9 @@ try {
     }
     if ($danfes === 'on') {
         $certificados_selecionados .= '<li>DANFES</li>';
+    }
+    if ($nfse === 'on') {
+        $certificados_selecionados .= '<li>NFS-E</li>';
     }
     $mail->Body .= "<p><strong>Certificados selecionados:</strong></p><ul>$certificados_selecionados</ul>";
     $anexos = [

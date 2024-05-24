@@ -112,34 +112,40 @@ if (!isset($_SESSION['sucesso_login']) ||
                     <p>SELECIONE ALGUM SERVIÇO ABAIXO:</p>
                     <div class="checkboxflex">
                         <label for="servicos">
-                            <span class="box">NFC-E </span>
+                            <span class="box">NFC-E</span>
                             <input 
                                 type="checkbox" 
                                 class="check" 
                                 name="nfce"
-                                
                             />
                         </label>
 
                         <label for="servicos">
-                            <span class="box">CUPOM FISCAL </span>
+                            <span class="box">CUPOM FISCAL</span>
                             <input 
                                 type="checkbox" 
                                 class="check" 
                                 name="cupom_fiscal"
-                                
                             />
                         </label>
 
                         <label for="servicos">
-                            <span class="box">DANFES </span>
+                            <span class="box">DANFES</span>
                             <input 
                                 type="checkbox" 
                                 class="check" 
                                 name="danfes"
-                                
                             />
                         </label>
+                        <label for="servicos">
+                            <span class="box">NFS-E</span>
+                            <input 
+                                type="checkbox" 
+                                class="check" 
+                                name="nfse"
+                            />
+                        </label>
+
                             <?php
                                 if(isset($_SESSION['erros']['checkbox'])) {
                                     echo '<label><span id="error">'.$_SESSION['erros']['checkbox'].'</span></label>';
