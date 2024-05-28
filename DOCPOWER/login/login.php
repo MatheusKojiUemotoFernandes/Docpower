@@ -23,15 +23,16 @@ if (empty($senha)) {
 
 if (empty($erros)) {
     // Preparar e executar a consulta
-    $stmt = $conexao->prepare("SELECT id, nome, senha FROM usuario WHERE email = ?");
-    $stmt->bind_param("s", $email);
+    $stmt = $conexao->prepare("SELECT id, nome, senha FROM usuario WHERE email = :email");
+    $stmt->bindParam(':email', $email);
     $stmt->execute();
-    $stmt->store_result();
 
     // Verificar se o email existe
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $nome, $hashed_password);
-        $stmt->fetch();
+    if ($stmt->rowCount() > 0) {
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id = $usuario['id'];
+        $nome = $usuario['nome'];
+        $hashed_password = $usuario['senha'];
 
         // Verificar a senha
         if (password_verify($senha, $hashed_password)) {
@@ -40,18 +41,20 @@ if (empty($erros)) {
             $_SESSION['email'] = $email;
             $_SESSION['id'] = $id;
 
-            // Redirecionar para o painel
-            $stmt->close();
-            $conexao->close();
-
-            $caminhoArquivo = "../data/contrato_assinado/{$_SESSION["sucesso_login"]} - {$_SESSION["id"]}/termos_usuario.pdf";
-            // Verifique se o diretório de destino existe e, se não, crie-o
+            // Verificar e criar diretório se necessário
+            $caminhoArquivo = "../data/termos/{$_SESSION["sucesso_login"]} - {$_SESSION["id"]}/termos_usuario.pdf";
             if (!is_dir(dirname($caminhoArquivo))) {
                 mkdir(dirname($caminhoArquivo), 0777, true);
             }
             copy("../data/termos.pdf", $caminhoArquivo);
-
-            header('Location: ../painel/index.php');
+            $stmt->closeCursor();
+            $conexao = null;
+            // Redirecionar de acordo com o usuário
+            if ($_SESSION['email'] === 'admin@docpower.com.br' && $_SESSION['sucesso_login'] === 'Administrador') {
+                header('Location: ../admin');
+            } else {
+                header('Location: ../painel');
+            }
             exit;
         } else {
             // Senha incorreta
@@ -61,15 +64,11 @@ if (empty($erros)) {
         // Conta não existe
         $erros['login'] = 'Esta conta não existe.';
     }
-
-    $stmt->close();
 }
 
 // Definir erros na sessão e redirecionar em caso de erro
 if (!empty($erros)) {
-    session_unset();
-    $_SESSION['erros'] = $erros;
-    $conexao->close();
-    header('Location: index.php');
+    $conexao = null;
+    mensagem_erro($erros, '../login');
     exit;
 }

@@ -65,22 +65,3 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) >
     exit(); // Garante que o script pare de executar após o redirecionamento
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // Atualiza o timestamp da última atividade
-
-
-// implementação de proteção contra CSRF
-//if(!isset($_SESSION['csrf_token'])) {
-//    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-//} else {
-//    unset($_SESSION['csrf_token']);
-//    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-//}
-//
-//if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-//    session_unset();
-//    session_destroy();
-//    http_response_code(403);
-//    echo 'CSRF token validation failed';
-//    // Opcionalmente, registre este incidente para análise futura
-//    //error_log('CSRF token validation failed for session ' . session_id());
-//    exit();
-//}

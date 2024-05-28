@@ -26,10 +26,15 @@ function checkToken($token) {
   }
 }
 
+function mensagem_erro($erros, $volta) {
+  $_SESSION['erros'] = $erros;
+  header('Location: '.$volta);
+  exit();
+}
+
 // Função para sanitizar entradas
 function sanitize($data) {
-  global $conexao;
-  return mysqli_real_escape_string($conexao, htmlentities($data, ENT_QUOTES, 'UTF-8'));
+  return htmlentities($data, ENT_QUOTES, 'UTF-8');
 }
 
 // Função para formatar Documento

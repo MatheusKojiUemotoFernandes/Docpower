@@ -8,9 +8,11 @@ if(!isset($_SESSION['sucesso_login'])) {
     $_SESSION['erros']['login'] = 'Movimento suspeito detectado!';
     header('Location: ../login');
     exit;
-} else {
-    require_once '../assets/php/getdata.php';
+} else if($_SESSION['email'] === 'admin@docpower.com.br' && $_SESSION['sucesso_login'] === 'Administrador') {
+    header('Location: ../admin');
 }
+require '../assets/php/delete.php';
+require_once '../assets/php/getdata.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -189,7 +191,9 @@ if(!isset($_SESSION['sucesso_login'])) {
                     <div class="total-xml">
                         <i class='bx bxs-archive-in'></i>
                         <h3>Novos XML's</h3>
-                        <p>0</p>
+                        <?php
+                            echo '<p>' . $_SESSION['novos_arquivos']['total_solicitacoes'] . '</p>';
+                        ?>
                         <!-- <button type="button">Ver novos</button> -->
                     </div>
                 </div>

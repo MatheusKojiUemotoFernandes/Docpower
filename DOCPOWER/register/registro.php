@@ -1,7 +1,7 @@
 <?php
 require_once '../assets/php/config.php';
-include("../assets/php/conexao.php");
-include("../assets/php/functions.php");
+include "../assets/php/conexao.php";
+include "../assets/php/functions.php";
 
 $token = $_POST['csrf_token'];
 checkToken($token);
@@ -9,11 +9,9 @@ checkToken($token);
 // Função para verificar duplicatas no banco de dados
 function checkDuplicate($conexao, $field, $value) {
     $stmt = $conexao->prepare("SELECT id FROM usuario WHERE $field = ?");
-    $stmt->bind_param("s", $value);
-    $stmt->execute();
-    $stmt->store_result();
-    $isDuplicate = $stmt->num_rows > 0;
-    $stmt->close();
+    $stmt->execute([$value]);
+    $isDuplicate = $stmt->rowCount() > 0;
+    $stmt->closeCursor(); // Fechar cursor
     return $isDuplicate;
 }
 
@@ -24,11 +22,11 @@ $telefone = sanitize($_POST['telefone']);
 $email = sanitize($_POST['email']);
 $senha = sanitize($_POST['senha']);
 $senha_confirmacao = sanitize($_POST['senha_check']);
-$termos = $_POST['termos'] ?? null;
+$termos = isset($_POST['termos']) ? $_POST['termos'] : null;
 
 // Inicializar array de erros
 $erros = [];
-// DDD's validos
+// DDD's válidos
 $dddsValidos = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '21', '22', '24', '27', '28', '31', '32', '33', '34', '35', '37', '38', '41', '42', '43', '44', '45', '46', '47', '48', '49', '51', '53', '54', '55', '61', '62', '63', '64', '65', '66', '67', '68', '69', '71', '73', '74', '75', '77', '79', '81', '82', '83', '84', '85', '86', '87', '88', '89', '91', '92', '93', '94', '95', '96', '97', '98', '99'];
 
 // Validação do documento
@@ -49,7 +47,7 @@ if (empty($documento)) {
 if (empty($telefone)) {
     $erros['telefone'] = 'Telefone é obrigatório.';
 } else {
-    if(!preg_match('/^[\d().\-]+$/', $telefone)){
+    if (!preg_match('/^[\d().\-]+$/', $telefone)) {
         $erros['telefone'] = 'Telefone inválido. Use apenas números, parênteses e traços.';
     } else {
         $telefone = preg_replace('/\D/', '', $telefone);
@@ -83,7 +81,7 @@ if ($senha != $senha_confirmacao || empty($senha_confirmacao)) {
     $erros['senha_check'] = 'As senhas não coincidem.';
 }
 
-if(empty($termos)){
+if (empty($termos)) {
     $erros['termos'] = 'Aceite os termos antes de prosseguir.';
 }
 
@@ -108,25 +106,22 @@ if (empty($erros)) {
     $hashed_password = password_hash($senha, PASSWORD_ARGON2ID, $options);
 
     $stmt = $conexao->prepare("INSERT INTO usuario (documento, nome, telefone, email, senha, data_cadastro) VALUES (?, ?, ?, ?, ?, NOW())");
-    $stmt->bind_param("sssss", $documento, $nome, $telefone, $email, $hashed_password);
+    $stmt->execute([$documento, $nome, $telefone, $email, $hashed_password]);
 
-    if ($stmt->execute()) {
-        $stmt->close();
-        $conexao->close();
-
+    if ($stmt->rowCount() > 0) {
+        $stmt->closeCursor();
+        $conexao = null; // Fechar conexão
         header('Location: ../login/index.php');
         exit;
     } else {
-        $_SESSION['erro_cadastro'] = 'Falha ao cadastrar. Por favor, tente novamente.';
-        $stmt->close();
-        $conexao->close();
-        header('Location: index.php');
+        $erros['erro_cadastro'] = 'Falha ao cadastrar. Por favor, tente novamente.';
         exit;
     }
-} else {
-    session_unset();
-    $_SESSION['erros'] = $erros;
-    $conexao->close();
-    header('Location: index.php');
+} 
+
+if (!empty($erros)) {
+    $stmt->closeCursor();
+    $conexao = null; // Fechar conexão
+    mensagem_erro($erros, '../register');
     exit;
 }

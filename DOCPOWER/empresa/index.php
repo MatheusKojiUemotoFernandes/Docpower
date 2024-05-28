@@ -1,15 +1,5 @@
 <?php
 require_once '../assets/php/config.php';
-require_once '../assets/php/getdata.php';
-include("../assets/php/functions.php");
-
-function sanitizeInput($input) {
-    return htmlentities($input, ENT_QUOTES, 'UTF-8');
-}
-
-function isValidCompany($company, $cnpj) {
-    return in_array($company, $_SESSION['nomes_empresas'], true) && in_array($cnpj, $_SESSION['cnpj_empresas'], true);
-}
 
 $vars = [
     'empresa_xss' => sanitizeInput($_GET['empresa'] ?? null),
@@ -20,7 +10,7 @@ $vars = [
 
 $_SESSION["dados_empresa"] = $vars;
 
-if (!isset($_SESSION['sucesso_login']) ||
+if(!isset($_SESSION['sucesso_login']) ||
     empty($_SESSION['dados_empresa']['empresa']) ||
     empty($_SESSION['dados_empresa']['cnpj']) ||
     !isValidCompany($_SESSION['dados_empresa']['empresa_xss'], $_SESSION['dados_empresa']['cnpj'])) {
@@ -31,7 +21,23 @@ if (!isset($_SESSION['sucesso_login']) ||
     $_SESSION['erros']['login'] = 'Movimento suspeito detectado!';
     header('Location: ../login');
     exit;
+} elseif($_SESSION['email'] === 'admin@docpower.com.br' && $_SESSION['sucesso_login'] === 'Administrador') {
+    header('Location: ../admin');
 }
+
+
+require_once '../assets/php/getdata.php';
+require '../assets/php/delete.php';
+include("../assets/php/functions.php");
+
+function sanitizeInput($input) {
+    return htmlentities($input, ENT_QUOTES, 'UTF-8');
+}
+
+function isValidCompany($company, $cnpj) {
+    return in_array($company, $_SESSION['nomes_empresas'], true) && in_array($cnpj, $_SESSION['cnpj_empresas'], true);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -249,7 +255,9 @@ if (!isset($_SESSION['sucesso_login']) ||
                     <div class="total-xml">
                         <i class='bx bxs-archive-in'></i>
                         <h3>Novos XML's</h3>
-                        <p>0</p>
+                        <?php
+                            echo '<p>' . $_SESSION['novos_arquivos']['total_solicitacoes'] . '</p>';
+                        ?>
                         <!-- <button type="button">Ver novos</button> -->
                     </div>
                 </div>

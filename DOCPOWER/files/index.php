@@ -8,9 +8,11 @@ if(!isset($_SESSION['sucesso_login'])) {
     $_SESSION['erros']['login'] = 'Movimento suspeito detectado!';
     header('Location: ../login');
     exit;
-} else {
-    require_once '../assets/php/getdata.php';
+} elseif($_SESSION['email'] === 'admin@docpower.com.br' && $_SESSION['sucesso_login'] === 'Administrador') {
+    header('Location: ../admin');
 }
+require '../assets/php/delete.php';
+require_once '../assets/php/getdata.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,44 +72,23 @@ if(!isset($_SESSION['sucesso_login'])) {
         <div class="todos">
             <div class="geral">
                 <div class="download">
-                    <h3>Novos downloads:</h3>
+                    <?php 
+                        if(isset($_SESSION["erros"]["download"])) {
+                            echo "<h3>{$_SESSION["erros"]["download"]}</h3>";
+                            unset($_SESSION["erros"]["download"]);
+                        } else {
+                            echo "<h3>Download:</h3>";
+                        }
+                    ?>
                     <div class="rolagem">
-                        <div class="divisao">
-                            <div class="espaco">
-                                <div class="dados">
-                                    <p>Razão social:</p>
-                                    <p>CNPJ:</p>
-                                    <p>Data de finalização:</p>
-                                </div>
-                                <div class="botao">
-                                    <div class="icone">
-                                        <i class='bx bxs-cloud-download'></i>
-                                        <h3>Baixar!</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php require 'get_download.php' ?>
                     </div>    
                 </div>
 
                 <div class="historico">
                     <h3>Histórico downloads:</h3>
                     <div class="rolagem">
-                        <div class="divisao">
-                            <div class="espaco">
-                                <div class="dados">
-                                    <p>Razão social:</p>
-                                    <p>CNPJ:</p>
-                                    <p>Data de finalização:</p>
-                                </div>
-                                <div class="botao">
-                                    <div class="icone">
-                                        <i class='bx bxs-cloud-download'></i>
-                                        <h3>Baixar!</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php require_once 'get_historico.php' ?>
                     </div>    
                 </div>
             </div>

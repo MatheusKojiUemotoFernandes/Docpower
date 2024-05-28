@@ -2,52 +2,20 @@
 require_once "../assets/php/config.php";
 include "../assets/php/conexao.php";
 include("../assets/php/functions.php");
-//include "../assets/php/lib/pdfparser-2.10.0/alt_autoload.php";
 
 $token = $_POST['csrf_token'];
 checkToken($token);
-
-//function gerarNomeUnico($nomeOriginal) {
-//    $extensao = pathinfo($nomeOriginal, PATHINFO_EXTENSION);
-//    return uniqid() . '.' . $extensao;
-//}
 
 $cnpj = sanitize($_POST["cnpj"]);
 $razao = sanitize($_POST["razao"]);
 $cidade = sanitize($_POST["cidade"]);
 $uf = sanitize($_POST["uf"]);
-//$contrato_assinado = $_FILES["contrato_assinado"];
 
 $erros = [];
 
 $ufs = [
-    'RO',
-    'AC',
-    'AM',
-    'RR',
-    'PA',
-    'AP',
-    'TO',
-    'MA',
-    'PI',
-    'CE',
-    'RN',
-    'PB',
-    'PE',
-    'AL',
-    'SE',
-    'BA',
-    'MG',
-    'ES',
-    'RJ',
-    'SP',
-    'PR',
-    'SC',
-    'RS',
-    'MS',
-    'MT',
-    'GO',
-    'DF',
+    'RO', 'AC', 'AM', 'RR', 'PA', 'AP', 'TO', 'MA', 'PI', 'CE', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA', 
+    'MG', 'ES', 'RJ', 'SP', 'PR', 'SC', 'RS', 'MS', 'MT', 'GO', 'DF',
 ];
 
 if (empty($cnpj)) {
@@ -63,15 +31,16 @@ if (empty($cnpj)) {
     }
 }
 
-$stmt = $conexao->prepare("SELECT usuario_id FROM empresas WHERE cnpj = ? AND usuario_id = ?");
-$stmt->bind_param("ss", $cnpj, $_SESSION["id"]);
-$stmt->execute();
-$stmt->store_result();
-    
-if ($stmt->num_rows > 0) {
-    $erros['cnpj'] = 'Esta empresa já esta cadastrada.';
+if (empty($erros)) {
+    $stmt = $conexao->prepare("SELECT usuario_id FROM empresas WHERE cnpj = :cnpj AND usuario_id = :usuario_id");
+    $stmt->bindParam(':cnpj', $cnpj);
+    $stmt->bindParam(':usuario_id', $_SESSION["id"]);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $erros['cnpj'] = 'Esta empresa já está cadastrada.';
+    }
 }
-$stmt->close();
 
 if (empty($razao)) {
     $erros["razao"] = "Razão social é obrigatório.";
@@ -87,49 +56,35 @@ if (empty($uf)) {
     $erros["uf"] = "UF inválido.";
 }
 
-//if (empty($contrato_assinado["name"])) {
-//    $erros["contrato_assinado"] = "Contrato é obrigatório.";
-//} else {
-//    $nomeArquivo = gerarNomeUnico($contrato_assinado["name"]);
-//    $caminhoArquivo = "../data/contrato_assinado/{$_SESSION["sucesso_login"]} - {$_SESSION["id"]}/{$cnpj}/{$razao}/{$nomeArquivo}";
-//    if (strtolower(pathinfo($contrato_assinado["name"], PATHINFO_EXTENSION)) != "pdf" || $contrato_assinado["type"] != "application/pdf") {
-//        $erros["contrato_assinado"] = "O arquivo deve ser do tipo PDF.";
-//    } else {
-//        try {
-//            $parser = new \Smalot\PdfParser\Parser();
-//            $parser->parseFile($contrato_assinado["tmp_name"]);
-//        } catch (Exception $e) {
-//            $erros["contrato_assinado"] = "O arquivo deve ser do tipo PDF.";
-//        }
-//    }
-//}
-
 if (empty($erros)) {
-    $stmt = $conexao->prepare("INSERT INTO empresas (cnpj, razao_social, cidade, uf, usuario_id) VALUES (?, ?, ?, ?, ?)");
-
-    $stmt->bind_param("sssss", $cnpj, $razao, $cidade, $uf, $_SESSION["id"]);
+    $stmt = $conexao->prepare("INSERT INTO empresas (cnpj, razao_social, cidade, uf, usuario_id) VALUES (:cnpj, :razao, :cidade, :uf, :usuario_id)");
+    $stmt->bindParam(':cnpj', $cnpj);
+    $stmt->bindParam(':razao', $razao);
+    $stmt->bindParam(':cidade', $cidade);
+    $stmt->bindParam(':uf', $uf);
+    $stmt->bindParam(':usuario_id', $_SESSION["id"]);
 
     if ($stmt->execute()) {
         $_SESSION["sucesso_cadastro"] = "Empresa cadastrada!";
-        $stmt->close();
-        $conexao->close();
-
-        $caminhoArquivo = "../data/contrato_assinado/{$_SESSION["sucesso_login"]} - {$_SESSION["id"]}/{$cnpj}/{$razao}/termos_empresa.pdf";
+        
+        $caminhoArquivo = "../data/termos/{$_SESSION["sucesso_login"]} - {$_SESSION["id"]}/{$cnpj}/{$razao}/termos_empresa.pdf";
         // Verifique se o diretório de destino existe e, se não, crie-o
         if (!is_dir(dirname($caminhoArquivo))) {
             mkdir(dirname($caminhoArquivo), 0777, true);
         }
         copy("../data/termos.pdf", $caminhoArquivo);
-
+        $stmt->closeCursor();
+        $conexao = null;
         header("Location: index.php");
         exit();
     } else {
         $erros["form"] = "Erro ao inserir empresa no banco de dados.";
     }
+}
 
-} else {
-    $_SESSION["erros"] = $erros;
-    $conexao->close();
-    header("Location: index.php");
+// Definir erros na sessão e redirecionar em caso de erro
+if (!empty($erros)) {
+    $conexao = null;
+    mensagem_erro($erros, '../painel');
     exit();
 }

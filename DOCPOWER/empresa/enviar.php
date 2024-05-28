@@ -1,6 +1,8 @@
 <?php
 require_once '../assets/php/config.php';
-require '../assets/php/lib/vendor/autoload.php';
+require_once '../vendor/autoload.php';
+
+include("../assets/php/conexao.php");
 include("../assets/php/functions.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -60,12 +62,12 @@ try {
     $mail->isSMTP();
     $mail->SMTPAuth = true;
     $mail->Host = 'smtp.titan.email';
-    $mail->Username = 'comercial@docpower.com.br';
-    $mail->Password = 'comercial@123';
+    $mail->Username = 'cadastros@docpower.com.br';
+    $mail->Password = 'cadastros123@';
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
-    $mail->setFrom('comercial@docpower.com.br', "DOCPOWER - {$_SESSION['sucesso_login']}");
-    $mail->addAddress('comercial@docpower.com.br', "{$_SESSION['sucesso_login']}");
+    $mail->setFrom('cadastros@docpower.com.br', "DOCPOWER - {$_SESSION['sucesso_login']}");
+    $mail->addAddress('cadastros@docpower.com.br', "{$_SESSION['sucesso_login']}");
     $mail->Subject = 'NOVO SERVIÇO DOCPOWER';
     $mail->isHTML(true);
     
@@ -113,6 +115,16 @@ try {
 } catch (Exception $e) {
     $_SESSION["envio"] = "Falha ao enviar o e-mail: {$mail->ErrorInfo}";
 }
+if(!isset($mail->ErrorInfo)){
+    $caminhoArquivo = "../data/arquivos/{$_SESSION["sucesso_login"]} - {$_SESSION["id"]}/{$cnpj}/{$razao}";
+
+    if (!is_dir(dirname($caminhoArquivo))) {
+        mkdir(dirname($caminhoArquivo), 0777, true);
+    }
+}
+
+$stmt = $conexao->prepare("INSERT INTO solicitacoes (usuario_id, razao_social, cnpj, data_finalizacao) VALUES (?, ?, ?, ?)");
+$stmt->execute([$_SESSION["id"], $_SESSION['dados_empresa']['empresa_xss'], $_SESSION['dados_empresa']['cnpj'], $datafinal]);
 
 header("Location: index.php?empresa={$_SESSION['dados_empresa']['empresa']}&cnpj={$_SESSION['dados_empresa']['cnpj']}");
 exit();

@@ -22,9 +22,9 @@ include("../assets/php/functions.php");
     <div class="container">
         <section class="header">
             <?php
-                if (isset($_SESSION['erro_cadastro'])){
-                    echo '<h2 id="status">'.$_SESSION['erro_cadastro'].'</h2>';
-                    unset($_SESSION['erro_cadastro']);
+                if (isset($_SESSION['erros']['erro_cadastro'])){
+                    echo '<h2 id="status">'.$_SESSION['erros']['erro_cadastro'].'</h2>';
+                    unset($_SESSION['erros']['erro_cadastro']);
                 } else {
                     echo '<h2>Cadastrar:</h2>';
                 }
