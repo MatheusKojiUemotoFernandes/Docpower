@@ -45,7 +45,7 @@ require '../assets/php/delete.php';
     <!--Formulário-->
     <div id="iuaorl" class="todos">
       <div id="ij1pdr" class="geral">
-        <form method="POST" enctype="multipart/form-data" id="uploadForm" class="download" action="post_solicitacao.php">
+        <form method="POST" enctype="multipart/form-data" id="uploadForm" class="download" action="enviar.php">
           <?php 
           echo generateToken(); 
 

@@ -30,12 +30,13 @@ try {
             return;
         }
 
-        $stmt = $conexao->prepare("SELECT * FROM usuario");
+        $stmt = $conexao->prepare("SELECT * FROM usuario WHERE id = :id");
+        $stmt->bindParam(':id', $solicitacao['usuario_id'], PDO::PARAM_INT);
         $stmt->execute();
         $Usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($Usuario) {
-            $directory = ARQUIVOS_DIR . "{$Usuario["nome"]} - {$_SESSION['id']}/{$solicitacao["cnpj"]}/{$solicitacao["razao_social"]}/{$solicitacao["id"]}/";
+            $directory = "../data/arquivos/{$Usuario["nome"]} - {$Usuario['id']}/{$solicitacao["cnpj"]}/{$solicitacao["razao_social"]}/{$solicitacao["id"]}/";
 
             // Verifica se o diretório existe antes de tentar acessar
             if (is_dir($directory)) {
